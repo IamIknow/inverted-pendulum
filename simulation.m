@@ -1,9 +1,8 @@
 Ts = 0.1;           % Sampling time
 
-x = [0;0;-pi;0];    % Initial condition (lower equilibrium)
+x = [-0.4;0;-pi;0];    % Initial condition (lower equilibrium)
 xref = [0;0;0;0];  % Reference state (upper equilibrium)
 
-sim_data = x;
 duration = 20;
 
 prediction_horizon = 10;
@@ -12,16 +11,17 @@ uopt = zeros(prediction_horizon, 1);
 
 options = optimoptions('fmincon','Algorithm','sqp','Display','none');
 
-LB = -7*ones(prediction_horizon,1);
-UB = 7*ones(prediction_horizon,1);
+LB = -25*ones(prediction_horizon,1);
+UB = 25*ones(prediction_horizon,1);
 
+sim_data = x;
 for i = 1 : (duration / Ts)
     COSTFUN = @(u) pendulumObjectiveFCN(u,x,Ts,prediction_horizon,xref,uopt(1));
     CONSFUN = @(u) pendulumConstraintFCN(u,x,Ts,prediction_horizon);
     uopt = fmincon(COSTFUN,uopt,[],[],[],[],LB,UB,CONSFUN,options);
     
     x = pendulum_discrete(x, uopt(1), Ts);
-    sim_data = [sim_data x];
+    sim_data = [sim_data x]; %#ok<AGROW>
 end
 
 figure;

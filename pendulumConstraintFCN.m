@@ -12,8 +12,8 @@ function [c, ceq] = pendulumConstraintFCN(u,x,Ts,N)
 
 
 % Range of cart positions
-zMin = -0.45;
-zMax = 0.45;
+zMin = -10;
+zMax = 10;
 
 c = zeros(N*2,1);
 % Apply 2*N cart position constraints across prediction horizon, from time

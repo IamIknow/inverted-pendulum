@@ -21,7 +21,7 @@ function J = pendulumObjectiveFCN(u,x,Ts,N,xref,u0)
 Q = diag([10,1,10,1]);
 % R matrix penalizes MV rate of change.  A small value is used here because
 % aggressive control is desired.
-R = 0.01;
+R = 0.5;
 
 % Cost Calculation
 % Set initial plant states, controller output and cost.
