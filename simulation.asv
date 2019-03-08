@@ -24,8 +24,8 @@ for i = 1 : (duration / Ts)
     xk = correct(EKF, y);
     
     % Solve optimization problem
-    COSTFUN = @(u) pendulumObjectiveFCN(u,xk,Ts,prediction_horizon,xref,uopt(1));
-    CONSFUN = @(u) pendulumConstraintFCN(u,xk,Ts,prediction_horizon);
+    COSTFUN = @(u) pendulumObjectiveFCN(u,x,Ts,prediction_horizon,xref,uopt(1));
+    CONSFUN = @(u) pendulumConstraintFCN(u,x,Ts,prediction_horizon);
     uopt = fmincon(COSTFUN,uopt,[],[],[],[],LB,UB,CONSFUN,options);
     
     % Predict next state
